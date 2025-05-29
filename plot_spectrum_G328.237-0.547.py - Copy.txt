@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Simulated parameters for the molecular line (e.g., CO J=1-0)
+source_name = "G328.237-0.547"
+line_rest_freq = 115.271  # GHz (for CO J=1-0)
+v_sys = -43.0  # km/s, systemic velocity
+line_width = 5.0  # km/s, FWHM
+peak_intensity = 1.5  # Arbitrary units (Jy or K)
+
+# Velocity axis (km/s)
+velocity = np.linspace(-60, -30, 500)
+
+# Simulated Gaussian line profile
+def gaussian(v, v0, fwhm, peak):
+    sigma = fwhm / (2 * np.sqrt(2 * np.log(2)))
+    return peak * np.exp(-0.5 * ((v - v0) / sigma)**2)
+
+intensity = gaussian(velocity, v_sys, line_width, peak_intensity)
+
+# Plotting the spectrum
+plt.figure(figsize=(10, 6))
+plt.plot(velocity, intensity, color='blue', lw=2)
+plt.title(f"Spectrum of {source_name} (simulated)", fontsize=14)
+plt.xlabel("Velocity (km/s)", fontsize=12)
+plt.ylabel("Intensity (arbitrary units)", fontsize=12)
+plt.grid(True)
+plt.tight_layout()
+plt.show()
